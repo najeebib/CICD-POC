@@ -82,7 +82,8 @@ jobs:
             }
         }
         EOL
-          sudo ln -sf /etc/nginx/sites-available/fastapi /etc/nginx/sites-enabled
+          sudo rm /etc/nginx/sites-enabled/default
+          sudo ln -sfn /etc/nginx/sites-available/fastapi /etc/nginx/sites-enabled/fastapi
           sudo nginx -t && sudo systemctl restart nginx
         fi
 
@@ -90,7 +91,7 @@ jobs:
         if [ $? -eq 0 ]; then
           echo "Tests passed. Restarting FastAPI application."
           pkill -f "uvicorn"
-          nohup uvicorn main:app --host 127.0.0.1 --port 8000 &
+          nohup uvicorn server:app --host 127.0.0.1 --port 8000 &
         else
           echo "Tests failed. Deployment aborted."
         fi  
