@@ -49,7 +49,8 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+        echo "$ssh-private-key" > private_key && chmod 600 private_key
+        ssh -o StrictHostKeyChecking=no -i private_key ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
         # Check if the app directory already exists
         sudo apt-get update
         sudo apt-get install -y python3-pip python3-venv
