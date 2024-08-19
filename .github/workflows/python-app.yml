@@ -48,7 +48,7 @@ jobs:
     - name: Deploy to EC2
       run: |
         echo "$ssh-private-key" > private_key && chmod 600 private_key
-        ssh -o StrictHostKeyChecking=no -i private_key ubuntu@${{ secrets.EC2_HOST }}
+        ssh -o StrictHostKeyChecking=no -i private_key ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
         set -e
         sudo apt-get update
         sudo apt-get install -y python3-pip python3-venv
@@ -69,19 +69,19 @@ jobs:
 
           sudo apt-get install -y nginx
           sudo tee /etc/nginx/sites-available/fastapi > /dev/null << 'EOL'
-          server {
-              listen 80;
-              server_name _;
-          
-              location / {
-                  proxy_pass http://127.0.0.1:8000;
-                  proxy_set_header Host $host;
-                  proxy_set_header X-Real-IP $remote_addr;
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                  proxy_set_header X-Forwarded-Proto $scheme;
-              }
-          }
-          EOL
+server {
+    listen 80;
+    server_name _;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+EOL
           sudo ln -sf /etc/nginx/sites-available/fastapi /etc/nginx/sites-enabled
           sudo nginx -t && sudo systemctl restart nginx
         fi
@@ -94,4 +94,4 @@ jobs:
         else
           echo "Tests failed. Deployment aborted."
         fi  
-        
+        EOF
