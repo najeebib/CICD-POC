@@ -72,7 +72,7 @@ jobs:
           server {
               listen 80;
               server_name _;
-
+          
               location / {
                   proxy_pass http://127.0.0.1:8000;
                   proxy_set_header Host $host;
@@ -93,5 +93,5 @@ jobs:
           nohup uvicorn main:app --host 127.0.0.1 --port 8000 &
         else
           echo "Tests failed. Deployment aborted."
-        fi
+        fi  
         EOF
