@@ -68,7 +68,7 @@ jobs:
           pip install -r requirements.txt
 
           sudo apt-get install -y nginx
-          sudo tee /etc/nginx/sites-available/fastapi > /dev/null
+          sudo tee /etc/nginx/sites-available/fastapi > /dev/null << 'EOL'
           server {
               listen 80;
               server_name _;
@@ -81,6 +81,7 @@ jobs:
                   proxy_set_header X-Forwarded-Proto $scheme;
               }
           }
+          EOL
           sudo ln -sf /etc/nginx/sites-available/fastapi /etc/nginx/sites-enabled
           sudo nginx -t && sudo systemctl restart nginx
         fi
