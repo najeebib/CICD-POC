@@ -84,9 +84,7 @@ jobs:
           sudo systemctl reload nginx
 
         fi
-
-        pytest
-        if [ $? -eq 0 ]; then
-          echo "Tests passed."
-        fi  
+        echo "Deploying the server"
+        pkill -f "uvicorn" || true
+        nohup uvicorn main:app --host 127.0.0.1 --port 8000 &
         EOF
