@@ -40,7 +40,6 @@ jobs:
         pytest
 
   create_pr:
-    create_pr:
     runs-on: ubuntu-latest
     needs: build
 
