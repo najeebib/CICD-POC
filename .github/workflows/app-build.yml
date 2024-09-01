@@ -50,9 +50,8 @@ jobs:
       run: |
         sudo apt-get install gh
 
-    - name: Create pull request
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
-        gh pr create --title "Merge dev to main" --body "This PR automatically merges dev branch changes to main" --base main --head dev --label "auto-generated"
+  - name: Create pull request
+    run: |
+      gh pr create --title "Merge dev to main" --body "This PR automatically merges dev branch changes to main" --base main --head dev --label "auto-generated"
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
