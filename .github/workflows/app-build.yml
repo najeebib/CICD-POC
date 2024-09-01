@@ -52,10 +52,10 @@ jobs:
 
       - name: Create pull request
         run: |
-          gh auth login --with-token <<< ${{ secrets.GITHUB_TOKEN }}
+          gh auth login --with-token <<< ${{ secrets.MY_TOKEN }}
           gh pr create --title "Automated PR from dev to main" \
                        --body "This is an automated pull request created by GitHub Actions." \
                        --base main \
                        --head dev
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
