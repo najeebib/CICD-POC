@@ -2,10 +2,9 @@ name: Python Application
 
 on:
   push:
-      branches:
+    branches:
       - "dev"
       - "*"
-
   pull_request:
     branches: [ "dev" ]
 
@@ -15,7 +14,6 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -53,8 +51,8 @@ jobs:
       run: |
         sudo apt-get install gh
 
-  - name: Create pull request
-    run: |
-      gh pr create --title "Merge dev to main" --body "This PR automatically merges dev branch changes to main" --base main --head dev --label "auto-generated"
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create pull request
+      run: |
+        gh pr create --title "Merge dev to main" --body "This PR automatically merges dev branch changes to main" --base main --head dev --label "auto-generated"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
