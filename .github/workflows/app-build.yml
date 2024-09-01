@@ -49,7 +49,7 @@ jobs:
     - name: Install GitHub CLI
       run: sudo apt-get install gh
 
-    - name: create pull request
-      run: gh pr create -B dev -H main --title 'Merge branch_to_merge into base_branch' --body 'Created by Github action'
+    - name: Create pull request
+      run: gh pr create -B dev -H main --title 'Merge branch_to_merge into base_branch' --body 'Created by GitHub action'
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
