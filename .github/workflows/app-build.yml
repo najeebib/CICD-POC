@@ -49,9 +49,7 @@ jobs:
     - name: Install GitHub CLI
       run: sudo apt-get install gh
 
-    - name: Create Pull Request
-      run: |
-        gh pr create --title "Merge dev to main" --body "This PR automatically merges dev branch changes to main" --base main --head dev --label "auto-generated"
+    - name: create pull request
+      run: gh pr create -B dev -H main --title 'Merge branch_to_merge into base_branch' --body 'Created by Github action'
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
