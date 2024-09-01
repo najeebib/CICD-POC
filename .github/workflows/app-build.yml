@@ -40,7 +40,8 @@ jobs:
         pytest
 
   create_pr:
-        runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
+    
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11.0.8
